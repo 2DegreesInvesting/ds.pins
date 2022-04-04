@@ -19,8 +19,7 @@ evolving dataset so I can get feedback from you.
 * As an analyst you would like to have a way to analyze each version of an
 evolving dataset so you can give feedback to me.
 
-We share the multiple versions of the dataset with a pins board in a shared
-Dropbox folder.
+We can do this with a pins board in a local folder shared via Dropbox.
 
 ### `pin_write()` with defaults
 

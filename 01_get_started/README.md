@@ -9,8 +9,7 @@ Use case:
 -   As an analyst you would like to have a way to analyze each version
     of an evolving dataset so you can give feedback to me.
 
-We share the multiple versions of the dataset with a pins board in a
-shared Dropbox folder.
+We can do this with a pins board in a local folder shared via Dropbox.
 
 ### `pin_write()` with defaults
 
@@ -34,7 +33,7 @@ data <- head(mtcars)
 board %>% 
   pin_write(data, "mtcars")
 #> Guessing `type = 'rds'`
-#> Creating new version '20220404T183145Z-100f8'
+#> Creating new version '20220404T192344Z-100f8'
 #> Writing to pin 'mtcars'
 ```
 
@@ -66,7 +65,7 @@ version ([qs](https://CRAN.R-project.org/package=qs)).
 ``` r
 board %>% 
   pin_write(data, "mtcars", type = "qs")
-#> Replacing version '20220404T183145Z-100f8' with '20220404T183145Z-3fa28'
+#> Replacing version '20220404T192344Z-100f8' with '20220404T192344Z-3fa28'
 #> Writing to pin 'mtcars'
 ```
 
@@ -91,7 +90,7 @@ new_data <- rownames_to_column(data)
 board %>% 
   pin_write(new_data, "mtcars")
 #> Guessing `type = 'rds'`
-#> Creating new version '20220404T183145Z-965f3'
+#> Creating new version '20220404T192344Z-965f3'
 #> Writing to pin 'mtcars'
 
 board %>% 
@@ -99,8 +98,8 @@ board %>%
 #> # A tibble: 2 × 3
 #>   version                created             hash 
 #>   <chr>                  <dttm>              <chr>
-#> 1 20220404T183145Z-3fa28 2022-04-04 15:31:00 3fa28
-#> 2 20220404T183145Z-965f3 2022-04-04 15:31:00 965f3
+#> 1 20220404T192344Z-3fa28 2022-04-04 16:23:00 3fa28
+#> 2 20220404T192344Z-965f3 2022-04-04 16:23:00 965f3
 ```
 
 ### `version`
@@ -114,8 +113,8 @@ versions
 #> # A tibble: 2 × 3
 #>   version                created             hash 
 #>   <chr>                  <dttm>              <chr>
-#> 1 20220404T183145Z-3fa28 2022-04-04 15:31:00 3fa28
-#> 2 20220404T183145Z-965f3 2022-04-04 15:31:00 965f3
+#> 1 20220404T192344Z-3fa28 2022-04-04 16:23:00 3fa28
+#> 2 20220404T192344Z-965f3 2022-04-04 16:23:00 965f3
 
 board %>%
   pin_read("mtcars", version = versions$version[[1]])
