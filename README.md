@@ -41,8 +41,9 @@ For example:
 ### Get started with a use case
 
 -   Create a pins board in a local folder under \~/Dropbox/.
--   Write and overwrite a dataset to a pin board.
+-   Write a dataset to a pin board.
 -   Read a dataset from a pin board.
+-   Overwrite a dataset in a pin board.
 -   Write a new version of a dataset to a pin board.
 -   Read a specific version of a dataset from a pin board.
 

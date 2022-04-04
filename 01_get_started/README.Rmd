@@ -11,80 +11,88 @@ knitr::opts_chunk$set(
 
 # Sharing pins
 
-Use case:
+User stories:
 
-* As a developer I would like to have a way to share with you each version of an
-evolving dataset so I can get feedback from you.
+> As a developer I would like to have a way to share different versions of a
+dataset so that you can try new data without braking old analyses.
 
-* As an analyst you would like to have a way to analyze each version of an
-evolving dataset so you can give feedback to me.
+> As an analyst you would like to have a way to access different versions of an
+evolving dataset so you can compare them.
 
 We can do this with a pins board in a local folder shared via Dropbox.
 
-### `pin_write()` with defaults
-
-I use `pin_write()` to write data to a shared pins board.
+### Setup
 
 ```{r}
 library(tidyverse, warn.conflicts = FALSE)
 library(pins)
-
-board <- board_folder("~/Dropbox/pins")
-data <- head(mtcars)
-
-board %>% 
-  pin_write(data, "mtcars")
 ```
 
-### `pin_read()`
-
-You use `pin_read()` to read data from a shared pins board.
+### Create a pins board in a local folder under ~/Dropbox/
 
 ```{r}
-library(pins)
-
 board <- board_folder("~/Dropbox/pins")
+```
 
+### Write a dataset to a pin board
+
+```{r}
+dataset <- head(mtcars)
+board %>% 
+  pin_write(dataset, "mtcars")
+```
+## Read a dataset from a pin board
+
+```{r}
 board %>% 
   pin_read("mtcars")
 ```
 
-### `pin_write()` with `type = "qs"`
-
-Now I use `type = "qs"` to replace the pin with a faster, smaller version ([qs](https://CRAN.R-project.org/package=qs)).
+### Overwrite a dataset in a pin board
 
 ```{r}
+dataset <- head(mtcars, 5)
 board %>% 
-  pin_write(data, "mtcars", type = "qs")
+  pin_write(dataset, "mtcars")
+```
+See the [qs](https://CRAN.R-project.org/package=qs) package.
+
+### Write a new version of a dataset to a pin board
+
+Sometimes it's useful to version pins, so that writing to an existing pin does
+not replace the existing data, but instead adds a new copy. You can activate
+versioning with `versioned = TRUE`, and you can do it both for a single pin or
+for all pins in a board board.
+
+* Activate versioning for a single pin in a board.
+
+```{r}
+dataset <- head(iris)
+board %>% 
+  pin_write(dataset, "iris", versioned = TRUE)
+
+dataset <- head(iris, 5)
+board %>% 
+  pin_write(dataset, "iris")
+
+board %>% 
+  pin_versions("iris")
 ```
 
-The original ".rds" file is gone. It was replaced with the ".qs" version. But
-sometimes it's useful to version pins, so that writing to an existing pin does
-not replace the existing data, but instead adds a new copy.
-
-### `versioned = TRUE` and `pin_versions()`
-
-I use `versioned = TRUE` to activate versioning.
+* Activate versioning for all pins in a board.
 
 ```{r}
 board <- board_folder("~/Dropbox/pins", versioned = TRUE)
-```
 
-I can now share multiple versions of the same dataset.
-
-```{r}
-new_data <- rownames_to_column(data)
-
+dataset <- head(mtcars)
 board %>% 
-  pin_write(new_data, "mtcars")
+  pin_write(dataset, "mtcars")
 
 board %>% 
   pin_versions("mtcars")
 ```
 
-### `version`
-
-You can now read a specific `version` of the data.
+### Read a specific version of a dataset from a pin board
 
 ```{r}
 versions <- board %>% 
@@ -98,8 +106,7 @@ board %>%
   pin_read("mtcars", version = versions$version[[2]])
 ```
 
-```{r inlclude = FALSE}
+```{r include=FALSE}
 # Cleanup
 fs::dir_delete("~/Dropbox/pins")
 ```
-
