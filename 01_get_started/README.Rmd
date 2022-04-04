@@ -9,104 +9,116 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Sharing pins
+# Sharing pins on Dropbox
 
-User stories:
+We might share different versions of evolving data as
+[pins](https://pins.rstudio.com/) in 2DII's Dropbox.
 
-> As a developer I would like to have a way to share different versions of a
-dataset so that you can try new data without braking old analyses.
+### Me
 
-> As an analyst you would like to have a way to access different versions of an
-evolving dataset so you can compare them.
+I create a folder on Dropbox and publish data into it.
 
-We can do this with a pins board in a local folder shared via Dropbox.
+```{r setup, include=FALSE}
+library(pastax.data)
+library(pins)
+library(here)
 
-### Setup
+source(here("01_get_started", "utils.R"))
+
+board <- board_folder(pins_path())
+
+board %>% 
+  pin_write(
+    x = head(pastax.data::esa_sme), 
+    name = "esa_sme",
+    type = "qs", 
+    title = "Registered SME v1",
+    description = "A demo dataset to show how we might share data.",
+    metadata = list(source = "https://esastar-emr.sso.esa.int/"),
+    versioned = TRUE
+  )
+
+board %>% 
+  pin_write(
+    x = pastax.data::esa_sme, 
+    name = "esa_sme",
+    type = "qs", 
+    title = "Registered SME v2",
+    description = "A demo dataset to show how we might share data.",
+    metadata = list(source = "https://esastar-emr.sso.esa.int/"),
+    versioned = TRUE
+  )
+
+board %>% 
+  pin_write(
+    x = pastax.data::ep_agriculture_livestock, 
+    name = "ep_agriculture_livestock",
+    type = "qs", 
+    title = "Companies in agriculture and livestock",
+    description = "A demo dataset to show how we might share data.",
+    metadata = list(source = "https://www.europages.co.uk/"),
+    versioned = TRUE
+  )
+
+example_path <- pins_path()
+```
+
+### You
+
+This assumes you have Dropbox in your computer in a location similar to this:
+
+```{r}
+example_path
+```
+
+Use this [pins](https://pins.rstudio.com/) package and create a board with the
+path to the Dropbox folder we share. I also use the tidyverse for convenience.
 
 ```{r}
 library(tidyverse, warn.conflicts = FALSE)
 library(pins)
+
+board <- board_folder(example_path)
 ```
 
-### Create a pins board in a local folder under ~/Dropbox/
-
-```{r}
-board <- board_folder("~/Dropbox/pins")
-```
-
-### Write a dataset to a pin board
-
-```{r}
-dataset <- head(mtcars)
-board %>% 
-  pin_write(dataset, "mtcars")
-```
-## Read a dataset from a pin board
+Read the latest version of a pin.
 
 ```{r}
 board %>% 
-  pin_read("mtcars")
+  pin_read("esa_sme")
 ```
 
-### Overwrite a dataset in a pin board
+List all pins.
 
 ```{r}
-dataset <- head(mtcars, 5)
 board %>% 
-  pin_write(dataset, "mtcars")
-```
-See the [qs](https://CRAN.R-project.org/package=qs) package.
-
-### Write a new version of a dataset to a pin board
-
-Sometimes it's useful to version pins, so that writing to an existing pin does
-not replace the existing data, but instead adds a new copy. You can activate
-versioning with `versioned = TRUE`, and you can do it both for a single pin or
-for all pins in a board board.
-
-* Activate versioning for a single pin in a board.
-
-```{r}
-dataset <- head(iris)
-board %>% 
-  pin_write(dataset, "iris", versioned = TRUE)
-
-dataset <- head(iris, 5)
-board %>% 
-  pin_write(dataset, "iris")
-
-board %>% 
-  pin_versions("iris")
+  pin_list()
 ```
 
-* Activate versioning for all pins in a board.
-
-```{r}
-board <- board_folder("~/Dropbox/pins", versioned = TRUE)
-
-dataset <- head(mtcars)
-board %>% 
-  pin_write(dataset, "mtcars")
-
-board %>% 
-  pin_versions("mtcars")
-```
-
-### Read a specific version of a dataset from a pin board
+Explore the available versions of one specific dataset.
 
 ```{r}
 versions <- board %>% 
-  pin_versions("mtcars")
+  pin_versions("esa_sme")
+
 versions
-
-board %>%
-  pin_read("mtcars", version = versions$version[[1]])
-
-board %>%
-  pin_read("mtcars", version = versions$version[[2]])
 ```
 
-```{r include=FALSE}
-# Cleanup
-fs::dir_delete("~/Dropbox/pins")
+Explore the metadata for a version of a pin.
+
+```{r}
+a_version <- versions %>% 
+  slice(2) %>% 
+  pull(version)
+a_version
+
+board %>% 
+  pin_meta("esa_sme", a_version)
+```
+
+Read a specific version.
+
+```{r}
+board %>% 
+  pin_read("esa_sme", a_version)
 ```

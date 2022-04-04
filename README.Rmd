@@ -12,6 +12,9 @@ knitr::opts_chunk$set(
 The goal of this series is to make it easier to share evolving data and other R
 objects across projects and with your colleagues.
 
+Compared to a previous meetup about pins, this one presents pins 1.0.0, which
+includes a new more explicit API and greater support for versioning.
+
 At the end of this series you will be able to do things like these:
 
 * Read and write data from a shared folder on Dropbox.
@@ -45,20 +48,23 @@ changes, re-run analyses on historical data, and undo mistakes.
 
 ## Syllabus
 
-### Get started with a use case
+### Using pins from Dropbox
 
-* Create a pins board in a local folder under ~/Dropbox/.
-* Write a dataset to a pin board.
-* Read a dataset from a pin board.
-* Overwrite a dataset in a pin board.
-* Write a new version of a dataset to a pin board.
-* Read a specific version of a dataset from a pin board.
+This meetup covers how to use pins from Dropbox.
 
-### Read and write pins from and to a folder in your computer and Dropbox.
+Objectives:
 
-* Read and write different versions of a pin.
-* Avoid computations by reusing previous results stored in a pins board.
-* Avoid re-downloading files from the internet unless they have changed.
+* Read the latest version of a pin.
+* List all pins.
+* Explore the available versions of one specific dataset.
+* Explore the metadata for a version of a pin.
+* Read a specific version.
+
+### Next (TBC)
+
+* Managing pins: Create boards, and read/write/delete/prune versioned pins.
+* Using pins to save computations and downloads.
+* Extending pins: Demo of the reuse package.
 
 ## Resources
 
