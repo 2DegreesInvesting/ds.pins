@@ -2,12 +2,7 @@
 output: github_document
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 The goal of this series it help you share and cache data, models, and
 other R objects across projects and with your colleagues.
