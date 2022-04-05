@@ -2,12 +2,12 @@ Publish pins
 ================
 
 ``` r
-library(pastax.data)
 library(pins)
+library(pastax.data)
 library(here)
 #> here() starts at /home/mauro/git/ds.pins
 
-source(here("01_intro", "utils.R"))
+source(here("R", "pins_path.R"))
 ```
 
 Someone publishes data into a folder on Dropbox. It doesn’t have to be
@@ -26,7 +26,7 @@ board %>%
     metadata = list(source = "https://esastar-emr.sso.esa.int/"),
     versioned = TRUE
   )
-#> Creating new version '20220405T104434Z-58d6d'
+#> Creating new version '20220405T113507Z-58d6d'
 #> Writing to pin 'esa_sme'
 
 board %>% 
@@ -39,7 +39,7 @@ board %>%
     metadata = list(source = "https://esastar-emr.sso.esa.int/"),
     versioned = TRUE
   )
-#> Creating new version '20220405T104434Z-fb4da'
+#> Creating new version '20220405T113507Z-fb4da'
 #> Writing to pin 'esa_sme'
 
 board %>% 
@@ -52,6 +52,6 @@ board %>%
     metadata = list(source = "https://www.europages.co.uk/"),
     versioned = TRUE
   )
-#> Creating new version '20220405T104435Z-5eaee'
+#> Creating new version '20220405T113508Z-5eaee'
 #> Writing to pin 'ep_agriculture_livestock'
 ```

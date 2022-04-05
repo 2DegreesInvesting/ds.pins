@@ -1,33 +1,27 @@
 Share data as pins with Dropbox
 ================
 
-We might share different versions of evolving data as
-[pins](https://pins.rstudio.com/) with Dropbox.
+To share different versions of an evolving dataset we can use the
+[pins](https://pins.rstudio.com/) package and Dropbox.
 
-### Publish pins
+### Publish
 
 Someone publishes data into a folder on Dropbox. It doesn’t have to be
 you.
 
-### Use pins
+### Use
 
 -   You have the shared Dropbox folder locally in your computer and in
     sync.
 
--   You know the path to that folder or have a helper function.
-
-``` r
-# Someone wrote this function. It doesn't have to be you.
-pins_path()
-#> /home/mauro/Dropbox (2° Investing)/2° Team/People/Mauro/pins
-```
-
--   Use the [pins](https://pins.rstudio.com/) package. I also use the
-    tidyverse for convenience.
+-   Use the [pins](https://pins.rstudio.com/) package. For convenience I
+    also use the packages tidyverse, here, and a custom function
+    `pins_path()`.
 
 -   Define the pins board you’ll use.
 
 ``` r
+library(pins)
 library(tidyverse, warn.conflicts = FALSE)
 #> ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
 #> ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
@@ -37,8 +31,12 @@ library(tidyverse, warn.conflicts = FALSE)
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
-library(pins)
+library(here)
 
+source(here("R", "pins_path.R"))
+
+pins_path()
+#> /home/mauro/Dropbox (2° Investing)/2° Team/People/Mauro/pins
 board <- board_folder(pins_path())
 ```
 
@@ -83,7 +81,7 @@ versions <- board %>%
   pin_versions("esa_sme")
 
 versions
-#> # A tibble: 54 × 3
+#> # A tibble: 86 × 3
 #>    version                created             hash 
 #>    <chr>                  <dttm>              <chr>
 #>  1 20220404T222149Z-58d6d 2022-04-04 19:21:00 58d6d
@@ -96,15 +94,17 @@ versions
 #>  8 20220404T231614Z-fb4da 2022-04-04 20:16:00 fb4da
 #>  9 20220404T231708Z-58d6d 2022-04-04 20:17:00 58d6d
 #> 10 20220404T231708Z-fb4da 2022-04-04 20:17:00 fb4da
-#> # … with 44 more rows
+#> # … with 76 more rows
 ```
 
 -   Explore the metadata for a version of a pin.
 
 ``` r
 version <- versions %>% 
+  # These functions come from the tidyverse
   slice(2) %>% 
   pull(version)
+
 version
 #> [1] "20220404T222149Z-fb4da"
 

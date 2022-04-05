@@ -10,35 +10,31 @@ knitr::opts_chunk$set(
 )
 ```
 
-We might share different versions of evolving data as
-[pins](https://pins.rstudio.com/) with Dropbox.
+To share different versions of an evolving dataset we can use the
+[pins](https://pins.rstudio.com/) package and Dropbox.
 
-### Publish pins
+### Publish
 
 ```{r child="publish-pins.Rmd", include=FALSE}
 
 ```
 
-### Use pins
+### Use
 
 * You have the shared Dropbox folder locally in your computer and in sync.
 
-* You know the path to that folder or have a helper function.
-
-```{r}
-# Someone wrote this function. It doesn't have to be you.
-pins_path()
-```
-
-* Use the [pins](https://pins.rstudio.com/) package. I also use the tidyverse
-for convenience.
+* Use the [pins](https://pins.rstudio.com/) package. For convenience I also use the packages tidyverse, here, and a custom function `pins_path()`.
 
 * Define the pins board you'll use.
 
 ```{r}
-library(tidyverse, warn.conflicts = FALSE)
 library(pins)
+library(tidyverse, warn.conflicts = FALSE)
+library(here)
 
+source(here("R", "pins_path.R"))
+
+pins_path()
 board <- board_folder(pins_path())
 ```
 
@@ -69,8 +65,10 @@ versions
 
 ```{r}
 version <- versions %>% 
+  # These functions come from the tidyverse
   slice(2) %>% 
   pull(version)
+
 version
 
 board %>% 

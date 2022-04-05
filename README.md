@@ -1,10 +1,10 @@
 
-The goal of this meetup is to show how we might share data with pins
-with Dropbox.
+The goal of this meetup is to show how we might share different versions
+of an evolving dataset as pins with Dropbox.
 
-Compared to a previous meetup about pins, this one presents pins 1.0.0,
-which includes a new more explicit API and greater support for
-versioning.
+Compared to a previous meetup about pins, this one uses [pins
+1.0.0](https://www.rstudio.com/blog/pins-1-0-0/), which includes a new
+more explicit API and greater support for versioning.
 
 At the end of this series you will be able to do two things:
 
@@ -19,8 +19,8 @@ Analysts and developers at 2DII and beyond.
 
 ## Why is this important?
 
-We need a way to easily share an evolving dataset and ensure new
-versions of the data don’t break existing code.
+We need a way to easily share different versions of an evolving dataset
+and ensure new versions of the data don’t break existing code.
 
 > The pins package makes it easy to share R objects across projects and
 > with your colleagues. You can pin objects to a variety of pin boards,

@@ -11,11 +11,11 @@ knitr::opts_chunk$set(
 ```
 
 ```{r}
-library(pastax.data)
 library(pins)
+library(pastax.data)
 library(here)
 
-source(here("01_intro", "utils.R"))
+source(here("R", "pins_path.R"))
 ```
 
 Someone publishes data into a folder on Dropbox. It doesn't have to be you.
