@@ -83,7 +83,7 @@ versions <- board %>%
   pin_versions("esa_sme")
 
 versions
-#> # A tibble: 46 × 3
+#> # A tibble: 54 × 3
 #>    version                created             hash 
 #>    <chr>                  <dttm>              <chr>
 #>  1 20220404T222149Z-58d6d 2022-04-04 19:21:00 58d6d
@@ -96,7 +96,7 @@ versions
 #>  8 20220404T231614Z-fb4da 2022-04-04 20:16:00 fb4da
 #>  9 20220404T231708Z-58d6d 2022-04-04 20:17:00 58d6d
 #> 10 20220404T231708Z-fb4da 2022-04-04 20:17:00 fb4da
-#> # … with 36 more rows
+#> # … with 44 more rows
 ```
 
 -   Explore the metadata for a version of a pin.

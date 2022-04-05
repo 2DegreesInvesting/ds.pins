@@ -1,26 +1,19 @@
----
-title: "Publish pins"
-output: github_document
----
+Publish pins
+================
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-```{r}
+``` r
 library(pastax.data)
 library(pins)
 library(here)
+#> here() starts at /home/mauro/git/ds.pins
 
-source(here("01_get_started", "utils.R"))
+source(here("01_intro", "utils.R"))
 ```
 
-Someone publishes data into a folder on Dropbox. It doesn't have to be you.
+Someone publishes data into a folder on Dropbox. It doesn’t have to be
+you.
 
-```{r}
+``` r
 board <- board_folder(pins_path())
 
 board %>% 
@@ -33,6 +26,8 @@ board %>%
     metadata = list(source = "https://esastar-emr.sso.esa.int/"),
     versioned = TRUE
   )
+#> Creating new version '20220405T104434Z-58d6d'
+#> Writing to pin 'esa_sme'
 
 board %>% 
   pin_write(
@@ -44,6 +39,8 @@ board %>%
     metadata = list(source = "https://esastar-emr.sso.esa.int/"),
     versioned = TRUE
   )
+#> Creating new version '20220405T104434Z-fb4da'
+#> Writing to pin 'esa_sme'
 
 board %>% 
   pin_write(
@@ -55,4 +52,6 @@ board %>%
     metadata = list(source = "https://www.europages.co.uk/"),
     versioned = TRUE
   )
+#> Creating new version '20220405T104435Z-5eaee'
+#> Writing to pin 'ep_agriculture_livestock'
 ```

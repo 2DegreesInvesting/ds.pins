@@ -9,17 +9,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-The goal of this series is to make it easier to share evolving data and other R
-objects across projects and with your colleagues.
+The goal of this meetup is to show how we might share data with pins with
+Dropbox.
 
 Compared to a previous meetup about pins, this one presents pins 1.0.0, which
 includes a new more explicit API and greater support for versioning.
 
-At the end of this series you will be able to do things like these:
+At the end of this series you will be able to do two things:
 
-* Read and write data from a shared folder on Dropbox.
+* Read data from a shared folder on Dropbox.
 * Use different versions of an evolving, dataset.
-* Download files but only if they haven't changed since last time you did it.
+
+I will also show briefly how to publish pins to a board on Dropbox.
 
 ## Who is the audience?
 
@@ -27,17 +28,8 @@ Analysts and developers at 2DII and beyond.
 
 ## Why is this important?
 
-At 2DII we often need to share data across different processes, projects, and
-colleagues. 
-
-For example:
-
-* You want to reuse one slow intermediate process into another process of the
-same analysis.
-
-* You want to use the same input dataset in different projects.
-
-* You want to share a problematic dataset with a colleague so you can debug it together.
+We need a way to easily share an evolving dataset and ensure new versions of the
+data don't break existing code.
 
 > The pins package makes it easy to share R objects across projects and with
 your colleagues. You can pin objects to a variety of pin boards, including ...
@@ -59,11 +51,7 @@ Objectives:
 * Explore the available versions of one specific dataset.
 * Explore the metadata for a version of a pin.
 * Read a specific version.
-
-### Next (tentative)
-
-* Managing pins: Create boards, and read/write/delete/prune versioned pins.
-* Using pins to save computations and downloads.
+* Overview how to publish pins with Dropbox.
 
 ## Resources
 
