@@ -1,4 +1,5 @@
 ---
+title: "Share data as pins with Dropbox"
 output: github_document
 ---
 
@@ -9,93 +10,53 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Sharing pins on Dropbox
-
 We might share different versions of evolving data as
-[pins](https://pins.rstudio.com/) in 2DII's Dropbox.
+[pins](https://pins.rstudio.com/) with Dropbox.
 
-### Me
+### Publish pins
 
-I create a folder on Dropbox and publish data into it.
+```{r child="publish-pins.Rmd", include=FALSE}
 
-```{r setup, include=FALSE}
-library(pastax.data)
-library(pins)
-library(here)
-
-source(here("01_get_started", "utils.R"))
-
-board <- board_folder(pins_path())
-
-board %>% 
-  pin_write(
-    x = head(pastax.data::esa_sme), 
-    name = "esa_sme",
-    type = "qs", 
-    title = "Registered SME v1",
-    description = "A demo dataset to show how we might share data.",
-    metadata = list(source = "https://esastar-emr.sso.esa.int/"),
-    versioned = TRUE
-  )
-
-board %>% 
-  pin_write(
-    x = pastax.data::esa_sme, 
-    name = "esa_sme",
-    type = "qs", 
-    title = "Registered SME v2",
-    description = "A demo dataset to show how we might share data.",
-    metadata = list(source = "https://esastar-emr.sso.esa.int/"),
-    versioned = TRUE
-  )
-
-board %>% 
-  pin_write(
-    x = pastax.data::ep_agriculture_livestock, 
-    name = "ep_agriculture_livestock",
-    type = "qs", 
-    title = "Companies in agriculture and livestock",
-    description = "A demo dataset to show how we might share data.",
-    metadata = list(source = "https://www.europages.co.uk/"),
-    versioned = TRUE
-  )
-
-example_path <- pins_path()
 ```
 
-### You
+### Use pins
 
-This assumes you have Dropbox in your computer in a location similar to this:
+* You have the shared Dropbox folder locally in your computer and in sync.
+
+* You know the path to that folder or have a helper function.
 
 ```{r}
-example_path
+# Someone wrote this function. It doesn't have to be you.
+pins_path()
 ```
 
-Use this [pins](https://pins.rstudio.com/) package and create a board with the
-path to the Dropbox folder we share. I also use the tidyverse for convenience.
+* Use the [pins](https://pins.rstudio.com/) package. I also use the tidyverse
+for convenience.
+
+* Define the pins board you'll use.
 
 ```{r}
 library(tidyverse, warn.conflicts = FALSE)
 library(pins)
 
-board <- board_folder(example_path)
+board <- board_folder(pins_path())
 ```
 
-Read the latest version of a pin.
+* Read the latest version of a pin.
 
 ```{r}
 board %>% 
   pin_read("esa_sme")
 ```
 
-List all pins.
+* List all pins published into the shared board.
 
 ```{r}
 board %>% 
   pin_list()
 ```
 
-Explore the available versions of one specific dataset.
+* Explore the available versions of one specific dataset.
 
 ```{r}
 versions <- board %>% 
@@ -104,21 +65,21 @@ versions <- board %>%
 versions
 ```
 
-Explore the metadata for a version of a pin.
+* Explore the metadata for a version of a pin.
 
 ```{r}
-a_version <- versions %>% 
+version <- versions %>% 
   slice(2) %>% 
   pull(version)
-a_version
+version
 
 board %>% 
-  pin_meta("esa_sme", a_version)
+  pin_meta("esa_sme", version)
 ```
 
-Read a specific version.
+* Read a specific version.
 
 ```{r}
 board %>% 
-  pin_read("esa_sme", a_version)
+  pin_read("esa_sme", version)
 ```

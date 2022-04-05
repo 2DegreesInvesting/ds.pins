@@ -42,9 +42,9 @@ For example:
 
 ## Syllabus
 
-### Using pins from Dropbox
+### Share data as pins with Dropbox
 
-This meetup covers how to use pins from Dropbox.
+This meetup covers how to share data as pins with Dropbox.
 
 Objectives:
 
@@ -54,12 +54,11 @@ Objectives:
 -   Explore the metadata for a version of a pin.
 -   Read a specific version.
 
-### Next (TBC)
+### Next (tentative)
 
 -   Managing pins: Create boards, and read/write/delete/prune versioned
     pins.
 -   Using pins to save computations and downloads.
--   Extending pins: Demo of the reuse package.
 
 ## Resources
 

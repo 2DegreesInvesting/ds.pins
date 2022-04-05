@@ -1,26 +1,31 @@
-
-# Sharing pins on Dropbox
+Share data as pins with Dropbox
+================
 
 We might share different versions of evolving data as
-[pins](https://pins.rstudio.com/) in 2DII’s Dropbox.
+[pins](https://pins.rstudio.com/) with Dropbox.
 
-### Me
+### Publish pins
 
-I create a folder on Dropbox and publish data into it.
+Someone publishes data into a folder on Dropbox. It doesn’t have to be
+you.
 
-### You
+### Use pins
 
-This assumes you have Dropbox in your computer in a location similar to
-this:
+-   You have the shared Dropbox folder locally in your computer and in
+    sync.
+
+-   You know the path to that folder or have a helper function.
 
 ``` r
-example_path
+# Someone wrote this function. It doesn't have to be you.
+pins_path()
 #> /home/mauro/Dropbox (2° Investing)/2° Team/People/Mauro/pins
 ```
 
-Use this [pins](https://pins.rstudio.com/) package and create a board
-with the path to the Dropbox folder we share. I also use the tidyverse
-for convenience.
+-   Use the [pins](https://pins.rstudio.com/) package. I also use the
+    tidyverse for convenience.
+
+-   Define the pins board you’ll use.
 
 ``` r
 library(tidyverse, warn.conflicts = FALSE)
@@ -34,10 +39,10 @@ library(tidyverse, warn.conflicts = FALSE)
 #> x dplyr::lag()    masks stats::lag()
 library(pins)
 
-board <- board_folder(example_path)
+board <- board_folder(pins_path())
 ```
 
-Read the latest version of a pin.
+-   Read the latest version of a pin.
 
 ``` r
 board %>% 
@@ -63,7 +68,7 @@ board %>%
 #> #   entity_mail <chr>, entity_web_site <chr>
 ```
 
-List all pins.
+-   List all pins published into the shared board.
 
 ``` r
 board %>% 
@@ -71,14 +76,14 @@ board %>%
 #> [1] "ep_agriculture_livestock" "esa_sme"
 ```
 
-Explore the available versions of one specific dataset.
+-   Explore the available versions of one specific dataset.
 
 ``` r
 versions <- board %>% 
   pin_versions("esa_sme")
 
 versions
-#> # A tibble: 16 × 3
+#> # A tibble: 46 × 3
 #>    version                created             hash 
 #>    <chr>                  <dttm>              <chr>
 #>  1 20220404T222149Z-58d6d 2022-04-04 19:21:00 58d6d
@@ -91,25 +96,20 @@ versions
 #>  8 20220404T231614Z-fb4da 2022-04-04 20:16:00 fb4da
 #>  9 20220404T231708Z-58d6d 2022-04-04 20:17:00 58d6d
 #> 10 20220404T231708Z-fb4da 2022-04-04 20:17:00 fb4da
-#> 11 20220404T231959Z-58d6d 2022-04-04 20:19:00 58d6d
-#> 12 20220404T231959Z-fb4da 2022-04-04 20:19:00 fb4da
-#> 13 20220404T232133Z-58d6d 2022-04-04 20:21:00 58d6d
-#> 14 20220404T232133Z-fb4da 2022-04-04 20:21:00 fb4da
-#> 15 20220404T232206Z-58d6d 2022-04-04 20:22:00 58d6d
-#> 16 20220404T232206Z-fb4da 2022-04-04 20:22:00 fb4da
+#> # … with 36 more rows
 ```
 
-Explore the metadata for a version of a pin.
+-   Explore the metadata for a version of a pin.
 
 ``` r
-a_version <- versions %>% 
+version <- versions %>% 
   slice(2) %>% 
   pull(version)
-a_version
+version
 #> [1] "20220404T222149Z-fb4da"
 
 board %>% 
-  pin_meta("esa_sme", a_version)
+  pin_meta("esa_sme", version)
 #> List of 11
 #>  $ file       : chr "esa_sme.qs"
 #>  $ file_size  : 'fs_bytes' int 240K
@@ -128,11 +128,11 @@ board %>%
 #>   ..$ version: chr "20220404T222149Z-fb4da"
 ```
 
-Read a specific version.
+-   Read a specific version.
 
 ``` r
 board %>% 
-  pin_read("esa_sme", a_version)
+  pin_read("esa_sme", version)
 #> # A tibble: 775 × 23
 #>    page_id details_id name              country_of_regi… entity_type entity_size
 #>    <chr>   <chr>      <chr>             <chr>            <chr>       <chr>      
